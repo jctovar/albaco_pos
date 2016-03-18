@@ -126,4 +126,18 @@ angular.module('starter.controllers', ['main.models'])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+.controller('ProductsCtrl', function($scope, product) {
+//    get all products
+    var query = product.get(function() {
+        $scope.products = query.product;
+    });
+})
+
+.controller('CustomersCtrl', function($scope, product) {
+//    get all customers
+    var query = product.get(function() {
+        $scope.products = query.product;
+    });
 });

@@ -1,6 +1,6 @@
 {
   "name": "albaco_pos",
-  "app_id": "",
+  "app_id": "3c3d69d7",
   "gulpStartupTasks": [
     "sass",
     "watch"
