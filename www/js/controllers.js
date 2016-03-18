@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['main.models'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -41,15 +41,88 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('PlaylistsCtrl', function($scope, $ionicModal, $ionicPopup, product, total) {
+        $scope.items = [];
+        $scope.subtotal = 0;
+        $scope.iva = 0;
+        $scope.total = 0;
+        $scope.listCanSwipe = true;
+        $scope.shouldShowDelete = false;
+        $scope.data = {};
+        
+        
+        $scope.clearSearch = function() {
+            $scope.data = {};
+            console.log('Clear...');
+        };
+        
+        var query = product.get(function() {
+            $scope.products = query.product;
+        });
+    
+        $ionicModal.fromTemplateUrl('templates/product_search.html', {
+            scope: $scope,
+            animation: 'slide-in-up',
+            focusFirstInput: true
+        }).then(function(modal) {
+            $scope.modal = modal
+        })
+
+        $scope.openModal = function() {
+            $scope.modal.show()
+        }
+
+        $scope.closeModal = function() {
+            $scope.data = {};
+            $scope.modal.hide();
+        }
+
+        $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+        })
+        
+        // Perform the update action when the user submits the form
+        $scope.doAdd = function(product_id) {
+            var item = product.get({ id: product_id }, function() {
+                var row = {};
+                    row.product_id = item.product[0].product_id;
+                    row.product_name = item.product[0].product_name;
+                    row.product_price = item.product[0].product_price_1;
+                    row.unit_name = item.product[0].unit_name;
+                    row.product_qty = '1';
+                $scope.items.push(row);
+                updateTotals();
+                console.log('add; ' + JSON.stringify($scope.items));
+            });
+ 
+            $scope.closeModal();
+        }
+        
+        $scope.openQty = function(index) {
+            var qty = Number($scope.items[index].product_qty);
+            
+            $scope.quantity = { value: qty }
+            var promptPopup = $ionicPopup.prompt({
+                title: 'Modificar cantidad',
+                templateUrl : 'popup-template.html',
+                scope: $scope,
+                inputPlaceholder: 'Cantidad numerica'
+            });
+            
+            promptPopup.then(function(res) {
+                $scope.items[index].product_qty = $scope.quantity.value;
+                updateTotals();
+            });   
+        }
+        
+        $scope.deleteItem = function(item) {
+            $scope.items.splice(item,1);
+            updateTotals();
+        };
+        
+        function updateTotals() {
+            $scope.subtotal = total($scope.items);
+        }
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
