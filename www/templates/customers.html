@@ -1,4 +1,4 @@
-<ion-view view-title="Clientes">
+<ion-view view-title="Lista de clientes">
   <ion-content>
       <div class="list list-inset">
         <label class="item item-input">
@@ -8,12 +8,9 @@
       </div>
         <!-- Inicia lista de productos -->
         <ion-list>
-            <ion-item class="item" ng-repeat="product in products | filter: data.searchQuery" ng-click="doAdd(product.product_id)">
-                {{product.product_name | uppercase}}
-                <p>{{product.category_name | uppercase}} [ {{product.product_key | uppercase}} ]</p>
-                <span class="item-note">
-                    {{product.product_price_1 | currency}} {{product.unit_name}}
-                </span>
+            <ion-item class="item" ng-repeat="customer in customers | filter: data.searchQuery" href="#/app/customers/{{customer.customer_id}}">
+                {{customer.customer_name | uppercase}}
+                <p>{{customer.customer_address_1 | uppercase}}, {{customer.customer_address_2 | uppercase}} {{customer.customer_postalcode | uppercase}}</p>
             </ion-item>
         </ion-list>
         

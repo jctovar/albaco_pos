@@ -1,22 +1,22 @@
 angular.module('main.models', ['ngResource'])
 .constant("server_config",{url : "https://goritec.com:3000", key : "84656ca7c7ccc6b44523a18b6bdf94140220bfc8"})
 
-.factory('customer', function($resource) {
-	return $resource('https://goritec.com:8100/customer/:id', { id: '@_id' },
+.factory('customer', function($resource, server_config) {
+	return $resource(server_config.url + '/customer/:id', {account_key : server_config.key}, { id: '@_id' },
     {
         'update': { method:'PUT' }
     });
 })
 
-.factory('invoice', function($resource) {
-	return $resource('https://goritec.com:8100/invoice/:id');
+.factory('invoice', function($resource, server_config) {
+	return $resource(server_config.url + '/invoice/:id', {account_key : server_config.key});
 })
 
 .factory('product', function($resource, server_config) {
 	return $resource(server_config.url + '/product/:id', {account_key : server_config.key});
 })
 
-.factory('detail', function($resource) {
+.factory('detail', function($resource, server_config) {
 	return $resource('https://goritec.com:8100/detail/:id');
 })
 

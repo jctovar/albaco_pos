@@ -1,0 +1,22 @@
+<ion-view view-title="Datos del cliente">
+  <ion-content>
+    <div class="list card">
+        <div class="item item-avatar">
+            <img src="img/user.png">
+            <h2>{{customer.customer_name | uppercase}}</h2>
+            <p>{{customer.customer_email | lowercase}}</p>
+            
+        </div>
+        <div class="item item-body">
+            <p>{{customer.customer_address_1}}, {{customer.customer_address_2}}</p>
+            <p>{{customer.customer_postalcode}}</p>
+            <p>
+                <a href="#" class="subdued"><i class="icon ion-folder"></i> Cotizaciones</a>
+            </p>
+        </div>
+    </div> 
+  </ion-content>
+  <div class="bar bar-footer">
+    <button class="button button-positive pull-right" ng-click="openModal(customer)">Editar</button>
+  </div>
+</ion-view>

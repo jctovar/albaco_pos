@@ -20,10 +20,32 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    {
+      "locator": "https://github.com/phonegap/phonegap-plugin-barcodescanner.git",
+      "id": "phonegap-plugin-barcodescanner"
+    },
+    {
+      "locator": "https://github.com/whiteoctober/cordova-plugin-app-version.git",
+      "id": "cordova-plugin-app-version"
+    },
+    "cordova-plugin-camera",
+    {
+      "locator": "https://github.com/katzer/cordova-plugin-email-composer.git",
+      "id": "cordova-plugin-email-composer"
+    },
+    "cordova-plugin-network-information",
+    "cordova-plugin-app-preferences",
+    {
+      "locator": "https://github.com/litehelpers/Cordova-sqlite-storage.git",
+      "id": "cordova-sqlite-storage"
+    }
   ],
   "cordovaPlatforms": [
     "ios",
-    "android"
+    {
+      "platform": "android",
+      "locator": "osx"
+    }
   ]
 }

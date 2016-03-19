@@ -13,19 +13,18 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title"></h1>
-    </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
-            Login
+        <ion-item class="item item-avatar item-calm" menu-close ng-click="login()">
+            <img src="img/user.png">
+            <h2>jctovar@gmail.com</h2>
+            <p>Back off, man. I'm a scientist.</p>
         </ion-item>
         <ion-item menu-close href="#/app/note">
             <i class="icon ion-compose"></i>
             Crear nota
         </ion-item>
-        <ion-item menu-close href="#/app/playlists">
+        <ion-item menu-close href="#/app/invoices">
             <i class="icon ion-folder"></i>
             Notas
         </ion-item>
@@ -33,7 +32,7 @@
             <i class="icon ion-cube"></i>
             Productos
         </ion-item>
-        <ion-item menu-close href="#/app/browse">
+        <ion-item menu-close href="#/app/customers">
             <i class="icon ion-person"></i>
             Clientes
         </ion-item>

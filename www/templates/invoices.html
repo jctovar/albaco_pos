@@ -1,0 +1,25 @@
+<ion-view view-title="Lista de notas">
+  <ion-content>
+      <div class="list list-inset">
+        <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="text" placeholder="Search" ng-model="data.searchQuery">
+        </label>
+      </div>
+        <!-- Inicia lista de productos -->
+        <ion-list>
+            <ion-item class="item" ng-repeat="invoice in invoices | filter: data.searchQuery" href="#/app/invoices/{{invoice.invoice_id}}">
+                {{invoice.invoice_id}} - {{invoice.status_id}}
+                <p> {{invoice.invoice_timestamp | date:'medium'}}</p>
+                <p>{{invoice.customer_name | uppercase}}</p>
+                <span class="item-note">
+                    {{product.product_price_1 | currency}} {{product.unit_name}}
+                </span>
+            </ion-item>
+        </ion-list>
+        
+    </ion-content>
+    <div class="bar bar-footer bar-balanced">
+        <button class="button button-clear pull-right">Agregar</button>
+    </div>
+</ion-view>

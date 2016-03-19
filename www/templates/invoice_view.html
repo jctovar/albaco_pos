@@ -1,0 +1,21 @@
+<ion-view view-title="Datos de la nota">
+  <ion-content>
+    <div class="list card">
+        <div class="item">
+            <h2>{{invoice.invoice_id}}</h2>
+            <p> {{invoice.invoice_timestamp | date:'medium'}}</p>
+            <p>{{invoice.customer_name}}</p>
+            <p>{{invoice.status_id}}</p>
+        </div>
+        <div class="item item-body">
+            
+            <p>
+                <a href="#" class="subdued"><i class="icon ion-folder"></i> Cotizaciones</a>
+            </p>
+        </div>
+    </div> 
+  </ion-content>
+  <div class="bar bar-footer">
+    <button class="button button-positive pull-right" ng-click="openModal(invoice)">Editar</button>
+  </div>
+</ion-view>

@@ -68,7 +68,7 @@ angular.module('starter.controllers', ['main.models'])
             $scope.modal = modal
         })
 
-        $scope.openModal = function() {
+        $scope.openSearch = function() {
             $scope.modal.show()
         }
 
@@ -125,19 +125,47 @@ angular.module('starter.controllers', ['main.models'])
         }
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('InvoiceCtrl', function($scope, invoice, $stateParams) {
+    //  get invoice
+    var query = invoice.get({ id: $stateParams.invoiceId }, function() {
+        //console.log(JSON.stringify(query.customer[0]));
+        $scope.invoice = query.invoice[0];
+    })
+})
+
+.controller('InvoicesCtrl', function($scope, invoice) {
+//    get all products
+    var query = invoice.get(function() {
+        $scope.invoices = query.invoice;
+    });
+})
+
+.controller('ProductCtrl', function($scope, product, $stateParams) {
+    //  get product
+    var query = product.get({ id: $stateParams.productId }, function() {
+        //console.log(JSON.stringify(query.customer[0]));
+        $scope.product = query.product[0];
+    })
 })
 
 .controller('ProductsCtrl', function($scope, product) {
-//    get all products
+    //  get all products
     var query = product.get(function() {
         $scope.products = query.product;
     });
 })
 
-.controller('CustomersCtrl', function($scope, product) {
-//    get all customers
-    var query = product.get(function() {
-        $scope.products = query.product;
+.controller('CustomerCtrl', function($scope, customer, $stateParams) {
+    //  get customer
+    var query = customer.get({ id: $stateParams.customerId }, function() {
+        //console.log(JSON.stringify(query.customer[0]));
+        $scope.customer = query.customer[0];
+    })
+})
+
+.controller('CustomersCtrl', function($scope, customer) {
+    //  get all customers
+    var query = customer.get(function() {
+        $scope.customers = query.customer;
     });
 });
