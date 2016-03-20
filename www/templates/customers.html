@@ -1,9 +1,12 @@
 <ion-view view-title="Lista de clientes">
+  <ion-nav-buttons side="secondary">
+        <button class="button icon ion-plus-round" ng-click="go('/app/add_customer')"></button>
+  </ion-nav-buttons>
   <ion-content>
       <div class="list list-inset">
         <label class="item item-input">
             <i class="icon ion-search placeholder-icon"></i>
-            <input type="text" placeholder="Search" ng-model="data.searchQuery">
+            <input type="search" placeholder="Search" ng-model="data.searchQuery">
         </label>
       </div>
         <!-- Inicia lista de productos -->
@@ -13,9 +16,5 @@
                 <p>{{customer.customer_address_1 | uppercase}}, {{customer.customer_address_2 | uppercase}} {{customer.customer_postalcode | uppercase}}</p>
             </ion-item>
         </ion-list>
-        
     </ion-content>
-    <div class="bar bar-footer bar-balanced">
-        <button class="button button-clear pull-right">Agregar</button>
-    </div>
 </ion-view>

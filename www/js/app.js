@@ -63,6 +63,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
       }
     })
     
+    .state('app.add_customer', {
+      url: '/add_customer',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/customer_add.html',
+          controller: 'AddCustomerCtrl'
+        }
+      }
+    })
+    
     .state('app.customer', {
         url: '/customers/:customerId',
         views: {
@@ -103,12 +113,12 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
       }
     })
 
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  .state('app.about', {
+    url: '/about',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/about.html',
+        controller: 'AboutCtrl'
       }
     }
   });

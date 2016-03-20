@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['main.models'])
+angular.module('starter.controllers', ['main.models', 'totals'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -41,15 +41,11 @@ angular.module('starter.controllers', ['main.models'])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope, $ionicModal, $ionicPopup, product, total) {
+.controller('PlaylistsCtrl', function($scope, $ionicModal, $ionicPopup, product) {
         $scope.items = [];
-        $scope.subtotal = 0;
-        $scope.iva = 0;
-        $scope.total = 0;
         $scope.listCanSwipe = true;
         $scope.shouldShowDelete = false;
         $scope.data = {};
-        
         
         $scope.clearSearch = function() {
             $scope.data = {};
@@ -111,25 +107,28 @@ angular.module('starter.controllers', ['main.models'])
             
             promptPopup.then(function(res) {
                 $scope.items[index].product_qty = $scope.quantity.value;
-                updateTotals();
             });   
         }
         
-        $scope.deleteItem = function(item) {
-            $scope.items.splice(item,1);
-            updateTotals();
+        $scope.onDoubleTap = function(item) {
+            alert(item);  
         };
         
-        function updateTotals() {
-            $scope.subtotal = total($scope.items);
-        }
+        $scope.deleteItem = function(item) {
+            $scope.items.splice(item,1);  
+        };
 })
 
-.controller('InvoiceCtrl', function($scope, invoice, $stateParams) {
+.controller('InvoiceCtrl', function($scope, invoice, detail, $stateParams) {
     //  get invoice
-    var query = invoice.get({ id: $stateParams.invoiceId }, function() {
+    var query1 = invoice.get({ id: $stateParams.invoiceId }, function() {
         //console.log(JSON.stringify(query.customer[0]));
-        $scope.invoice = query.invoice[0];
+        $scope.invoice = query1.invoice[0];
+    })
+    
+    var query2 = detail.get({ id: $stateParams.invoiceId }, function() {
+        //console.log(JSON.stringify(query.customer[0]));
+        $scope.details = query2.detail;
     })
 })
 
@@ -163,9 +162,42 @@ angular.module('starter.controllers', ['main.models'])
     })
 })
 
-.controller('CustomersCtrl', function($scope, customer) {
+.controller('AddCustomerCtrl', function($scope, customer) {
+    $scope.customer = [];
+    //  save customer
+    $scope.doSubmit = function() {
+        $scope.entry = new customer()
+        
+        $scope.entry.data = $scope.customer;
+        customer.save($scope.entry, function() {
+            console.log('Doing login', $scope.customer.name);
+        });
+    }
+})
+
+.controller('CustomersCtrl', function($scope, $location, customer) {
+    $scope.go = function ( path ) {
+        $location.path( path );
+    };
     //  get all customers
     var query = customer.get(function() {
         $scope.customers = query.customer;
+    });
+})
+
+.controller('AboutCtrl', function($scope, $cordovaAppVersion) {
+    //  get info device
+    document.addEventListener("deviceready", function () {
+        $cordovaAppVersion.getVersionNumber().then(function (version) {
+            $scope.appVersion = version;
+        });
+  
+        $cordovaAppVersion.getVersionCode().then(function (build) {
+            $scope.appBuild = build;
+        });
+        
+        $cordovaAppVersion.getVersionCode().then(function (name) {
+            $scope.appName = name;
+        });
     });
 });

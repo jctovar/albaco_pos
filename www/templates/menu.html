@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-calm">
+    <ion-nav-bar class="bar-positive">
       <ion-nav-back-button>
       </ion-nav-back-button>
 
@@ -15,26 +15,30 @@
   <ion-side-menu side="left">
     <ion-content>
       <ion-list>
-        <ion-item class="item item-avatar item-calm" menu-close ng-click="login()">
-            <img src="img/user.png">
-            <h2>jctovar@gmail.com</h2>
-            <p>Back off, man. I'm a scientist.</p>
+        <ion-item class="item item-thumbnail-left item-positive" menu-close ng-click="login()">
+            <img src="img/favicon.png">
+            <h2 class="light">Albaco</h2>
+            <p class="light">POS multialmacen</p>
         </ion-item>
         <ion-item menu-close href="#/app/note">
-            <i class="icon ion-compose"></i>
+            <i class="icon ion-compose assertive"></i>
             Crear nota
         </ion-item>
         <ion-item menu-close href="#/app/invoices">
-            <i class="icon ion-folder"></i>
+            <i class="icon ion-folder balanced"></i>
             Notas
         </ion-item>
         <ion-item menu-close href="#/app/products">
-            <i class="icon ion-cube"></i>
+            <i class="icon ion-cube positive"></i>
             Productos
         </ion-item>
         <ion-item menu-close href="#/app/customers">
-            <i class="icon ion-person"></i>
+            <i class="icon ion-person calm"></i>
             Clientes
+        </ion-item>
+        <ion-item menu-close href="#/app/about">
+            <i class="icon ion-gear-b royal"></i>
+            Preferencias
         </ion-item>
       </ion-list>
     </ion-content>

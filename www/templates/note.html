@@ -6,9 +6,8 @@
         <ion-toggle ng-model="shouldShowDelete">
             Mostra boton de eliminar?
         </ion-toggle>
-        
             <ion-list show-delete="shouldShowDelete" can-swipe="listCanSwipe">
-                <ion-item class="item-avatar" ng-repeat="item in items" ng-click="openQty($index)">
+                <ion-item class="item" ng-repeat="item in items" ng-click="openQty($index)" on-double-tap="onDoubleTap()">
                     <ion-delete-button class="ion-minus-circled" ng-click="deleteItem($index)"></ion-delete-button>
                     {{item.product_name}}
                     <p>Cantidad: {{item.product_qty}} {{item.unit_name}} * {{item.product_price | currency}} </p>
@@ -22,7 +21,7 @@
             </ion-list>
     </ion-content>
     <div class="bar bar-footer bar-balanced">
-        <button class="button button-clear pull-right">Total {{subtotal | currency}}</button>
+        <button class="button button-clear pull-right">Total {{items | total | currency}}</button>
     </div>
 </ion-view>
 <script id="popup-template.html" type="text/ng-template">
