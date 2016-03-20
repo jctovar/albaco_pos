@@ -162,15 +162,13 @@ angular.module('starter.controllers', ['main.models', 'totals'])
     })
 })
 
-.controller('AddCustomerCtrl', function($scope, customer) {
-    $scope.customer = [];
+.controller('AddCustomerCtrl', function($scope, $location, customer) {
+    $scope.customer = {};
     //  save customer
     $scope.doSubmit = function() {
-        $scope.entry = new customer()
-        
-        $scope.entry.data = $scope.customer;
-        customer.save($scope.entry, function() {
-            console.log('Doing login', $scope.customer.name);
+        $scope.customer.account_id = 1;
+        customer.save($scope.customer, function() {
+            $location.path('/app/customers');
         });
     }
 })
