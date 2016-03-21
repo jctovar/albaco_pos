@@ -1,4 +1,7 @@
 <ion-view view-title="Lista de categorías">
+  <ion-nav-buttons side="secondary">
+        <button class="button icon ion-plus-round" ng-click="go('/app/add_category')"></button>
+  </ion-nav-buttons>  
   <ion-content>
       <div class="list list-inset">
         <label class="item item-input">
@@ -6,19 +9,12 @@
             <input type="text" placeholder="Search" ng-model="data.searchQuery">
         </label>
       </div>
-        <!-- Inicia lista de productos -->
+        <!-- Inicia lista de categorias -->
         <ion-list>
-            <ion-item class="item" ng-repeat="product in products | filter: data.searchQuery" href="#/app/products/{{product.product_id}}">
-                {{product.product_name | uppercase}}
-                <p>{{product.category_name | uppercase}} [ {{product.product_key | uppercase}} ]</p>
-                <span class="item-note">
-                    {{product.product_price_1 | currency}} {{product.unit_name}}
-                </span>
+            <ion-item class="item" ng-repeat="category in categories | filter: data.searchQuery" href="#/app/category/{{category.category_id}}">
+                {{category.category_name | uppercase}}
+                <p>{{category.category_description | uppercase}}</p>
             </ion-item>
         </ion-list>
-        
     </ion-content>
-    <div class="bar bar-footer bar-balanced">
-        <button class="button button-clear pull-right">Agregar</button>
-    </div>
 </ion-view>

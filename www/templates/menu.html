@@ -12,7 +12,7 @@
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
 
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" expose-aside-when="large">
     <ion-content>
       <ion-list>
         <ion-item class="item item-thumbnail-left item-positive" menu-close ng-click="login()">
@@ -28,6 +28,10 @@
             <i class="icon ion-folder balanced"></i>
             Notas
         </ion-item>
+        <ion-item menu-close href="#/app/categories">
+            <i class="icon ion-cube positive"></i>
+            Categorías
+        </ion-item>
         <ion-item menu-close href="#/app/products">
             <i class="icon ion-cube positive"></i>
             Productos
@@ -36,9 +40,13 @@
             <i class="icon ion-person calm"></i>
             Clientes
         </ion-item>
-        <ion-item menu-close href="#/app/about">
+        <ion-item menu-close href="#/app/settings">
             <i class="icon ion-gear-b royal"></i>
             Preferencias
+        </ion-item>
+        <ion-item menu-close href="#/app/about">
+            <i class="icon ion-help"></i>
+            Acerca de
         </ion-item>
       </ion-list>
     </ion-content>

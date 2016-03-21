@@ -41,7 +41,7 @@ angular.module('starter.controllers', ['main.models', 'totals'])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope, $ionicModal, $ionicPopup, product) {
+.controller('PlaylistsCtrl', function($scope, $ionicModal, $ionicPopup, product, $cordovaBarcodeScanner) {
         $scope.items = [];
         $scope.listCanSwipe = true;
         $scope.shouldShowDelete = false;
@@ -77,6 +77,19 @@ angular.module('starter.controllers', ['main.models', 'totals'])
             $scope.modal.remove();
         })
         
+        $scope.openScanner = function() {
+            console.log('open scanner...');
+            $cordovaBarcodeScanner
+                .scan()
+                .then(function(barcodeData) {
+                    console.log(JSON.stringify(barcodeData));
+                    alert(barcodeData.text);
+                    // Success! Barcode data is here
+                }, function(error) {
+                    // An error occurred
+            });
+        }
+        
         // Perform the update action when the user submits the form
         $scope.doAdd = function(product_id) {
             var item = product.get({ id: product_id }, function() {
@@ -87,7 +100,6 @@ angular.module('starter.controllers', ['main.models', 'totals'])
                     row.unit_name = item.product[0].unit_name;
                     row.product_qty = '1';
                 $scope.items.push(row);
-                updateTotals();
                 console.log('add; ' + JSON.stringify($scope.items));
             });
  
@@ -154,7 +166,31 @@ angular.module('starter.controllers', ['main.models', 'totals'])
     });
 })
 
-.controller('CustomerCtrl', function($scope, customer, $stateParams) {
+.controller('CategoriesCtrl', function($scope, $location, category) {
+    $scope.go = function ( path ) {
+        $location.path( path );
+    };
+    //  get all products
+    var query = category.get(function() {
+        $scope.categories = query.category;
+    });
+})
+
+.controller('AddCategoryCtrl', function($scope, $location, category) {
+    $scope.category = {};
+    //  save customer
+    $scope.doSubmit = function() {
+        $scope.category.account_id = 1;
+        category.save($scope.category, function() {
+            $location.path('/app/categories');
+        });
+    }
+})
+
+.controller('CustomerCtrl', function($scope, $location, customer, $stateParams) {
+    $scope.go = function ( path ) {
+        $location.path( path );
+    };
     //  get customer
     var query = customer.get({ id: $stateParams.customerId }, function() {
         //console.log(JSON.stringify(query.customer[0]));
@@ -173,6 +209,22 @@ angular.module('starter.controllers', ['main.models', 'totals'])
     }
 })
 
+.controller('EditCustomerCtrl', function($scope, $location, customer, $stateParams) {
+    $scope.customer = {};
+    //  get customer
+    var query = customer.get({ id: $stateParams.customerId }, function() {
+        //console.log(JSON.stringify(query.customer[0]));
+        $scope.customer = query.customer[0];
+        $scope.customer.customer_postalcode = Number(query.customer[0].customer_postalcode);
+    })
+    //  save customer
+    $scope.doSubmit = function() {
+        customer.update($scope.customer, function() {
+            $location.path('/app/customers');
+        });
+    };
+})
+
 .controller('CustomersCtrl', function($scope, $location, customer) {
     $scope.go = function ( path ) {
         $location.path( path );
@@ -183,19 +235,27 @@ angular.module('starter.controllers', ['main.models', 'totals'])
     });
 })
 
-.controller('AboutCtrl', function($scope, $cordovaAppVersion) {
+.controller('SettingsCtrl', function($scope, $location, account) {
+    
+})
+
+.controller('AboutCtrl', function($scope, $cordovaAppVersion, $cordovaDevice) {
     //  get info device
     document.addEventListener("deviceready", function () {
         $cordovaAppVersion.getVersionNumber().then(function (version) {
             $scope.appVersion = version;
         });
-  
         $cordovaAppVersion.getVersionCode().then(function (build) {
             $scope.appBuild = build;
         });
-        
-        $cordovaAppVersion.getVersionCode().then(function (name) {
+        $cordovaAppVersion.getAppName().then(function (name) {
             $scope.appName = name;
         });
+        $scope.device = $cordovaDevice.getDevice();
+        $scope.cordova = $cordovaDevice.getCordova();
+        $scope.model = $cordovaDevice.getModel();
+        $scope.platform = $cordovaDevice.getPlatform();
+        $scope.uuid = $cordovaDevice.getUUID();
+        $scope.version = $cordovaDevice.getVersion();
     });
 });

@@ -1,13 +1,16 @@
-<ion-view view-title="Acerca de Albaco POS">
+<ion-view view-title="Acerca">
   <ion-content>
       <div class="card">
         <div class="item item-divider">
-            Acerca...
+            {{appName}}
         </div>
         <div class="item item-text-wrap">
             <p>Versión {{appVersion}}</p>
-            <p>{{appName}}</p>
             <p>Build {{appBuild}}</p>
+            <p>{{platform}}  {{version}}</p>
+            <p>Modelo {{model}}</p>
+            <p>Uuid {{uuid}}</p>
+            <p>Serial {{device.serial}}</p>
         </div>
       </div>
   </ion-content>

@@ -1,0 +1,19 @@
+<ion-view view-title="Nueva categoria">
+    <ion-content>
+      <form ng-submit="doSubmit()">
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Categoría</span>
+                <input type="text" placeholder="Categoría" ng-model="category.category_name" required>
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Descripción</span>
+                <input type="text" placeholder="Descripción" ng-model="category.category_description">
+            </label>
+            <label class="item">
+                <button class="button button-block button-positive" type="submit">Guardar</button>
+            </label>
+        </div>
+      </form>
+    </ion-content>
+</ion-view>

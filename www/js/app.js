@@ -33,6 +33,26 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
     controller: 'AppCtrl'
   })
 
+  .state('app.categories', {
+    url: '/categories',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/categories.html',
+        controller: 'CategoriesCtrl'
+      }
+    }
+  })
+
+  .state('app.add_category', {
+      url: '/add_category',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/category_add.html',
+          controller: 'AddCategoryCtrl'
+        }
+      }
+    })
+
   .state('app.products', {
     url: '/products',
     views: {
@@ -73,7 +93,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
       }
     })
     
+    .state('app.edit_customer', {
+      cache: false,
+      url: '/edit_customer/:customerId',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/customer_edit.html',
+          controller: 'EditCustomerCtrl'
+        }
+      }
+    })
+    
     .state('app.customer', {
+        cache: false,
         url: '/customers/:customerId',
         views: {
         'menuContent': {
@@ -113,6 +145,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
       }
     })
 
+  .state('app.settings', {
+    url: '/settings',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/settings.html',
+        controller: 'SettingsCtrl'
+      }
+    }
+  })
+  
   .state('app.about', {
     url: '/about',
     views: {
