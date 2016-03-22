@@ -20,6 +20,19 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
       //StatusBar.styleDefault();
       StatusBar.backgroundColorByHexString('#0099CC');
     }
+    if(window.Connection) {
+        if(navigator.connection.type == Connection.NONE) {
+            $ionicPopup.confirm({
+                title: "Internet Disconnected",
+                content: "The internet is disconnected on your device."
+            })
+            .then(function(result) {
+                if(!result) {
+                    ionic.Platform.exitApp();
+                }
+            });
+        }
+    }
   });
 })
 
@@ -42,6 +55,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
       }
     }
   })
+  
+  .state('app.category', {
+        url: '/categories/:categoryId',
+        views: {
+        'menuContent': {
+            templateUrl: 'templates/category.html',
+            controller: 'CategoryCtrl'
+        }
+        }
+    })
 
   .state('app.add_category', {
       url: '/add_category',
@@ -54,7 +77,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
     })
 
   .state('app.products', {
-    url: '/products',
+    url: '/products/:categoryId',
     views: {
       'menuContent': {
         templateUrl: 'templates/products.html',
@@ -64,10 +87,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
   })
 
   .state('app.product', {
-        url: '/products/:productId',
+        url: '/product/:categoryId/:productId',
         views: {
         'menuContent': {
-            templateUrl: 'templates/product_view.html',
+            templateUrl: 'templates/product.html',
             controller: 'ProductCtrl'
         }
         }
@@ -140,7 +163,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
       views: {
         'menuContent': {
           templateUrl: 'templates/note.html',
-          controller: 'PlaylistsCtrl'
+          controller: 'NoteCtrl'
         }
       }
     })

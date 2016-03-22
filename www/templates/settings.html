@@ -1,0 +1,31 @@
+<ion-view view-title="Preferencias">
+  <ion-content>
+      <form ng-submit="doSubmit()">
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Razón social</span>
+                <input type="text" placeholder="Razón social" ng-model="account.account_name" capitalize required>
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Dirección</span>
+                <input type="text" placeholder="Dirección" ng-model="account.account_address">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Registro</span>
+                <input type="text" placeholder="Registro" ng-model="account.account_register">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Télefono</span>
+                <input type="text" placeholder="Télefono" ng-model="account.account_phone">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Licencia</span>
+                <input type="text" placeholder="Licencia" ng-model="account.account_key" readonly>
+            </label>
+            <label class="item">
+                <button class="button button-block button-positive" type="submit">Guardar</button>
+            </label>
+        </div>
+      </form>
+  </ion-content>
+</ion-view>

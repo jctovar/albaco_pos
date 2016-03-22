@@ -11,7 +11,7 @@
       </div>
         <!-- Inicia lista de productos -->
         <ion-list>
-            <ion-item class="item" ng-repeat="product in products | filter: data.searchQuery" href="#/app/products/{{product.product_id}}">
+            <ion-item class="item" ng-repeat="product in products | filter: data.searchQuery" href="#/app/product/{{product.category_id}}/{{product.product_id}}">
                 {{product.product_name | uppercase}}
                 <p>{{product.category_name | uppercase}} [ {{product.product_key | uppercase}} ]</p>
                 <span class="item-note">

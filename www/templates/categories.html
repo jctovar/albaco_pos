@@ -11,9 +11,10 @@
       </div>
         <!-- Inicia lista de categorias -->
         <ion-list>
-            <ion-item class="item" ng-repeat="category in categories | filter: data.searchQuery" href="#/app/category/{{category.category_id}}">
+            <ion-item class="item" ng-repeat="category in categories | filter: data.searchQuery" href="#/app/products/{{category.category_id}}">
                 {{category.category_name | uppercase}}
-                <p>{{category.category_description | uppercase}}</p>
+                <p>{{category.category_description | uppercase}}&nbsp;</p>
+                <span class="badge badge-balanced">{{category.product_count}}</span>
             </ion-item>
         </ion-list>
     </ion-content>

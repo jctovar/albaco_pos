@@ -22,8 +22,15 @@ angular.module('main.models', ['ngResource'])
     });
 })
 
+.factory('catalog', function($resource, server_config) {
+	return $resource(server_config.url + '/catalog/:id', { account_key : server_config.key, id : '@_id' },
+    {
+        'update': { method:'PUT' }
+    });
+})
+
 .factory('product', function($resource, server_config) {
-	return $resource(server_config.url + '/product/:id', { account_key : server_config.key, id : '@_id' },
+	return $resource(server_config.url + '/product/:categoryId/:productId', { account_key : server_config.key, id : '@_id' },
     {
         'update': { method:'PUT' }
     });

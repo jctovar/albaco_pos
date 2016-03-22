@@ -4,25 +4,24 @@
         <button class="button icon ion-search" ng-click="openSearch()"></button>
     </ion-nav-buttons>
     <ion-content>
-        <ion-toggle ng-model="shouldShowDelete">
-            Mostra boton de eliminar?
-        </ion-toggle>
-            <ion-list show-delete="shouldShowDelete" can-swipe="listCanSwipe">
-                <ion-item class="item" ng-repeat="item in items" ng-click="openQty($index)" on-double-tap="onDoubleTap()">
-                    <ion-delete-button class="ion-minus-circled" ng-click="deleteItem($index)"></ion-delete-button>
-                    {{item.product_name}}
-                    <p>Cantidad: {{item.product_qty}} {{item.unit_name}} * {{item.product_price | currency}} </p>
-                    <span class="item-note">
-                        [{{item.product_qty * item.product_price | currency}}]
-                    </span>
-                    <ion-option-button class="button-calm" ng-click="openQty()">
-                        Editar
-                    </ion-option-button>
-                </ion-item>
-            </ion-list>
+        <ion-list show-delete="shouldShowDelete" can-swipe="listCanSwipe">
+            <ion-item class="item" ng-repeat="item in items" ng-click="openQty($index)" on-double-tap="onDoubleTap()">
+                {{item.product_name}}
+                <p>Cantidad: {{item.product_qty}} {{item.unit_name}} * {{item.product_price | currency}} </p>
+                <span class="item-note">
+                    [{{item.product_qty * item.product_price | currency}}]
+                </span>
+                <ion-option-button class="button-assertive" ng-click="deleteItem($index)">
+                    Eliminar
+                </ion-option-button>
+                <ion-option-button class="button-calm" ng-click="openQty()">
+                    Precios
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
     </ion-content>
     <div class="bar bar-footer bar-balanced">
-        <button class="button button-clear pull-right">Total {{items | total | currency}}</button>
+        <button class="button button-large button-clear pull-right" ng-click="openMenu()"><h1>Total {{items | total | currency}}</h1></button>
     </div>
 </ion-view>
 <script id="popup-template.html" type="text/ng-template">

@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['main.models', 'totals'])
+angular.module('starter.controllers', ['main.models', 'main.directives', 'totals'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -41,7 +41,7 @@ angular.module('starter.controllers', ['main.models', 'totals'])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope, $ionicModal, $ionicPopup, product, $cordovaBarcodeScanner) {
+.controller('NoteCtrl', function($scope, $ionicModal, $ionicPopup, catalog, $ionicActionSheet, $cordovaBarcodeScanner, $timeout, product) {
         $scope.items = [];
         $scope.listCanSwipe = true;
         $scope.shouldShowDelete = false;
@@ -52,11 +52,11 @@ angular.module('starter.controllers', ['main.models', 'totals'])
             console.log('Clear...');
         };
         
-        var query = product.get(function() {
+        var query = catalog.get(function() {
             $scope.products = query.product;
         });
     
-        $ionicModal.fromTemplateUrl('templates/product_search.html', {
+        $ionicModal.fromTemplateUrl('templates/search.html', {
             scope: $scope,
             animation: 'slide-in-up',
             focusFirstInput: true
@@ -129,6 +129,34 @@ angular.module('starter.controllers', ['main.models', 'totals'])
         $scope.deleteItem = function(item) {
             $scope.items.splice(item,1);  
         };
+        
+        
+        
+        $scope.openMenu = function() {
+            
+            // Show the action sheet
+            var hideSheet = $ionicActionSheet.show({
+                buttons: [
+                { text: '<b>Imprimir</b>' },
+                { text: 'Guardar' }
+                ],
+                destructiveText: 'Eliminar',
+                titleText: 'Acciones de venta',
+                cancelText: 'Cerrar',
+                cancel: function() {
+                    // add cancel code..
+                    },
+                buttonClicked: function(index) {
+                return true;
+                }
+            });
+
+            // For example's sake, hide the sheet after two seconds
+            $timeout(function() {
+                hideSheet();
+            }, 2000);
+
+        };
 })
 
 .controller('InvoiceCtrl', function($scope, invoice, detail, $stateParams) {
@@ -153,15 +181,15 @@ angular.module('starter.controllers', ['main.models', 'totals'])
 
 .controller('ProductCtrl', function($scope, product, $stateParams) {
     //  get product
-    var query = product.get({ id: $stateParams.productId }, function() {
-        //console.log(JSON.stringify(query.customer[0]));
+    var query = product.get({ categoryId: $stateParams.categoryId, productId: $stateParams.productId }, function() {
+        console.log(JSON.stringify(query.product[0]));
         $scope.product = query.product[0];
     })
 })
 
-.controller('ProductsCtrl', function($scope, product) {
+.controller('ProductsCtrl', function($scope, product, $stateParams) {
     //  get all products
-    var query = product.get(function() {
+    var query = product.get({ categoryId: $stateParams.categoryId },function() {
         $scope.products = query.product;
     });
 })
@@ -173,6 +201,16 @@ angular.module('starter.controllers', ['main.models', 'totals'])
     //  get all products
     var query = category.get(function() {
         $scope.categories = query.category;
+    });
+})
+
+.controller('CategoryCtrl', function($scope, $location, product) {
+    $scope.go = function ( path ) {
+        $location.path( path );
+    };
+    //  get all products
+    var query = product.get(function() {
+        $scope.products = query.product;
     });
 })
 
@@ -236,7 +274,18 @@ angular.module('starter.controllers', ['main.models', 'totals'])
 })
 
 .controller('SettingsCtrl', function($scope, $location, account) {
+    $scope.account = {};
+    //  get account data
+    var query = account.get({ id: '1' }, function() {
+        $scope.account = query.account[0];
+    });
     
+    //  save customer
+    $scope.doSubmit = function() {
+        account.update($scope.account, function() {
+            $location.path('/app/customers');
+        });
+    };
 })
 
 .controller('AboutCtrl', function($scope, $cordovaAppVersion, $cordovaDevice) {
