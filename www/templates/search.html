@@ -16,7 +16,7 @@
     <ion-content>
         <!-- Inicia lista de productos -->
         <ion-list>
-            <ion-item class="item" ng-repeat="product in products | filter: data.searchQuery" ng-click="doAdd(product.product_id)">
+            <ion-item class="item" ng-repeat="product in products | filter: data.searchQuery" ng-click="doAdd(product.category_id, product.product_id)">
                 {{product.product_name | uppercase}} ({{product.category_name | uppercase}})
                 <p>CLAVE {{product.product_key | uppercase}}</p>
                 <span class="item-note">

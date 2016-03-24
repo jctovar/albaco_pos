@@ -1,4 +1,4 @@
-<ion-view cache-view="false" view-title="Editar producto">
+<ion-view view-title="Editar producto">
     <ion-content>
       <form ng-submit="doSubmit()">
         <div class="list">
@@ -9,6 +9,13 @@
             <label class="item item-input item-floating-label">
                 <span class="input-label">Descripción</span>
                 <input type="text" placeholder="Descripción" ng-model="product.product_description">
+            </label>
+             <label class="item item-input item-select">
+                <div class="input-label">
+                Categoría
+                </div>
+                <select ng-model="product.category_id" ng-options="category.category_id as category.category_name for category in categories">
+                </select>
             </label>
             <label class="item item-input item-floating-label">
                 <span class="input-label">Código</span>
@@ -22,18 +29,12 @@
                 <span class="input-label">Precio minimo</span>
                 <input type="number" placeholder="Precio minimo" ng-model="product.product_price_2">
             </label>
-            <label class="item item-input item-floating-label">
-                <span class="input-label">Tara</span>
-                <input type="number" placeholder="Tara" ng-model="product.product_tare_id">
-            </label>
-            <label class="item item-toggle">
-                Causa tara de peso
-                <label class="toggle toggle-assertive">
-                <input type="checkbox">
-                    <div class="track">
-                        <div class="handle"></div>
-                    </div>
-                </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                Unidad
+                </div>
+                <select ng-model="product.category_id" ng-options="category.category_id as category.category_name for category in categories">
+                </select>
             </label>
             <label>
                 <ion-toggle ng-model="product.product_tare_id" toggle-class="toggle-calm">Causa tara de peso</ion-toggle>

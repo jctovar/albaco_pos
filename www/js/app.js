@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $ionicPopup) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -94,6 +94,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
             controller: 'ProductCtrl'
         }
         }
+    })
+    
+  .state('app.add_product', {
+      url: '/add_product',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/product.html',
+          controller: 'AddProductCtrl'
+        }
+      }
     })
 
   .state('app.customers', {

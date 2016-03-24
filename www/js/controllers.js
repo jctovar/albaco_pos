@@ -91,8 +91,8 @@ angular.module('starter.controllers', ['main.models', 'main.directives', 'totals
         }
         
         // Perform the update action when the user submits the form
-        $scope.doAdd = function(product_id) {
-            var item = product.get({ id: product_id }, function() {
+        $scope.doAdd = function(category_id, product_id) {
+            var item = product.get({ categoryId: category_id, productId: product_id }, function() {
                 var row = {};
                     row.product_id = item.product[0].product_id;
                     row.product_name = item.product[0].product_name;
@@ -179,19 +179,47 @@ angular.module('starter.controllers', ['main.models', 'main.directives', 'totals
     });
 })
 
-.controller('ProductCtrl', function($scope, product, $stateParams) {
+.controller('ProductCtrl', function($scope, product, category, $stateParams) {
+    $scope.product = {};
     //  get product
-    var query = product.get({ categoryId: $stateParams.categoryId, productId: $stateParams.productId }, function() {
-        console.log(JSON.stringify(query.product[0]));
-        $scope.product = query.product[0];
+    var query1 = product.get({ categoryId: $stateParams.categoryId, productId: $stateParams.productId }, function() {
+        $scope.product = query1.product[0];
+        if (query1.product[0].product_tare_id == 1) $scope.product.product_tare_id = true;
+        
     })
+    
+    var query2 = category.get(function() {
+        $scope.categories = query2.category;
+    });
+    
+    //  update product
+    $scope.doSubmit = function() {
+        console.log('try update...')
+        product.update($scope.product, function() {
+            $location.path('/app/customers');
+        });
+    };
 })
 
-.controller('ProductsCtrl', function($scope, product, $stateParams) {
+.controller('ProductsCtrl', function($scope, $location, product, $stateParams) {
+    $scope.go = function ( path ) {
+        $location.path( path );
+    };
     //  get all products
     var query = product.get({ categoryId: $stateParams.categoryId },function() {
         $scope.products = query.product;
     });
+})
+
+.controller('AddProductCtrl', function($scope, $location, product) {
+    $scope.product = {};
+    //  save customer
+    $scope.doSubmit = function() {
+        $scope.category.account_id = 1;
+        category.save($scope.category, function() {
+            $location.path('/app/categories');
+        });
+    }
 })
 
 .controller('CategoriesCtrl', function($scope, $location, category) {
