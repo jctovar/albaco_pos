@@ -48,5 +48,12 @@ angular.module('main.models', ['ngResource'])
     {
         'update': { method:'PUT' }
     });
+})
+
+.factory('unit', function($resource, server_config) {
+	return $resource(server_config.url + '/unit/:id', { account_key : server_config.key, id : '@_id' },
+    {
+        'update': { method:'PUT' }
+    });
 });
 
