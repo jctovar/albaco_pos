@@ -3,6 +3,8 @@
         <button class="button icon ion-plus-round" ng-click="go('/app/add_category')"></button>
   </ion-nav-buttons>  
   <ion-content>
+      <ion-refresher pulling-text="Arrastre para recargar" on-refresh="doRefresh()">
+      </ion-refresher>
       <div class="list list-inset">
         <label class="item item-input">
             <i class="icon ion-search placeholder-icon"></i>
@@ -10,11 +12,14 @@
         </label>
       </div>
         <!-- Inicia lista de categorias -->
-        <ion-list>
+        <ion-list can-swipe="listCanSwipe">
             <ion-item class="item" ng-repeat="category in categories | filter: data.searchQuery" href="#/app/products/{{category.category_id}}">
                 {{category.category_name | uppercase}}
                 <p>{{category.category_description | uppercase}}&nbsp;</p>
                 <span class="badge badge-balanced">{{category.product_count}}</span>
+                <ion-option-button class="button-assertive" ng-click="deleteItem(customer.customer_id)">
+                    Eliminar
+                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>

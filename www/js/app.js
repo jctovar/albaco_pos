@@ -91,7 +91,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'product
         views: {
         'menuContent': {
             templateUrl: 'templates/product.html',
-            controller: 'ProductCtrl'
+            controller: 'EditProductCtrl'
         }
         }
     })
@@ -120,19 +120,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'product
       url: '/add_customer',
       views: {
         'menuContent': {
-          templateUrl: 'templates/customer_add.html',
+          templateUrl: 'templates/customer.html',
           controller: 'AddCustomerCtrl'
-        }
-      }
-    })
-    
-    .state('app.edit_customer', {
-      cache: false,
-      url: '/edit_customer/:customerId',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/customer_edit.html',
-          controller: 'EditCustomerCtrl'
         }
       }
     })
@@ -142,8 +131,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers', 'product
         url: '/customers/:customerId',
         views: {
         'menuContent': {
-            templateUrl: 'templates/customer_view.html',
-            controller: 'CustomerCtrl'
+            templateUrl: 'templates/customer.html',
+            controller: 'EditCustomerCtrl'
         }
         }
     })

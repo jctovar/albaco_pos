@@ -18,20 +18,28 @@ angular.module('device.controllers', [])
 .controller('AboutCtrl', function($scope, $cordovaAppVersion, $cordovaDevice) {
     //  get info device
     document.addEventListener("deviceready", function () {
-        $cordovaAppVersion.getVersionNumber().then(function (version) {
-            $scope.appVersion = version;
-        });
-        $cordovaAppVersion.getVersionCode().then(function (build) {
-            $scope.appBuild = build;
-        });
-        $cordovaAppVersion.getAppName().then(function (name) {
-            $scope.appName = name;
-        });
-        $scope.device = $cordovaDevice.getDevice();
-        $scope.cordova = $cordovaDevice.getCordova();
-        $scope.model = $cordovaDevice.getModel();
-        $scope.platform = $cordovaDevice.getPlatform();
-        $scope.uuid = $cordovaDevice.getUUID();
-        $scope.version = $cordovaDevice.getVersion();
+        if(ionic.Platform.isWindowsPhone() || ionic.Platform.isAndroid() || ionic.Platform.isIPad() || ionic.Platform.isIOS() ) {
+            $cordovaAppVersion.getVersionNumber().then(function (version) {
+                $scope.appVersion = version;
+            });
+            $cordovaAppVersion.getVersionCode().then(function (build) {
+                $scope.appBuild = build;
+            });
+            $cordovaAppVersion.getAppName().then(function (name) {
+                $scope.appName = name;
+            });
+            $scope.device = $cordovaDevice.getDevice();
+            $scope.cordova = $cordovaDevice.getCordova();
+            $scope.model = $cordovaDevice.getModel();
+            $scope.platform = $cordovaDevice.getPlatform();
+            $scope.uuid = $cordovaDevice.getUUID();
+            $scope.version = $cordovaDevice.getVersion();
+        };
     });
+    
+    ionic.Platform.ready(function(){
+        console.log(JSON.stringify(ionic.Platform.platform()));
+        console.log(JSON.stringify(ionic.Platform.isWindowsPhone()));
+    });
+    
 });

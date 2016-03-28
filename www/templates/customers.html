@@ -3,6 +3,8 @@
         <button class="button icon ion-plus-round" ng-click="go('/app/add_customer')"></button>
   </ion-nav-buttons>
   <ion-content>
+      <ion-refresher pulling-text="Arrastre para recargar" on-refresh="doRefresh()">
+      </ion-refresher>
       <div class="list list-inset">
         <label class="item item-input">
             <i class="icon ion-search placeholder-icon"></i>
@@ -10,10 +12,13 @@
         </label>
       </div>
         <!-- Inicia lista de productos -->
-        <ion-list>
+        <ion-list can-swipe="listCanSwipe">
             <ion-item class="item" ng-repeat="customer in customers | filter: data.searchQuery" href="#/app/customers/{{customer.customer_id}}">
                 {{customer.customer_name | uppercase}}
                 <p>{{customer.customer_address_1 | uppercase}}, {{customer.customer_address_2 | uppercase}} {{customer.customer_postalcode | uppercase}}</p>
+                <ion-option-button class="button-assertive" ng-click="deleteItem(customer.customer_id)">
+                    Eliminar
+                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>

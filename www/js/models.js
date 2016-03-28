@@ -55,5 +55,12 @@ angular.module('main.models', ['ngResource'])
     {
         'update': { method:'PUT' }
     });
+})
+
+.factory('discount', function($resource, server_config) {
+	return $resource(server_config.url + '/discount/:id', { account_key : server_config.key, id : '@_id' },
+    {
+        'update': { method:'PUT' }
+    });
 });
 

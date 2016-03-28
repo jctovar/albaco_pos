@@ -17,6 +17,13 @@ $dark:                            #444 !default;
 
 $colibri: #0099CC !default;
 
+$big-bg:      '/img/bg.png';
+
+.scroll-bg {
+  background: url($big-bg) repeat;
+  height: 160px;
+}
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 

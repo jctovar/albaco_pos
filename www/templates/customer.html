@@ -1,0 +1,46 @@
+<ion-view view-title="{{title}}">
+    <ion-content>
+      <form ng-submit="doSubmit()">
+        <div class="list">
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Nombre completo</span>
+                <input type="text" placeholder="Nombre" ng-model="customer.customer_name" ng-maxlength="50" capitalize required>
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">RFC</span>
+                <input type="tel" placeholder="RFC" ng-model="customer.customer_register" ng-minlength="12" ng-maxlength="13" capitalize>
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Dirección</span>
+                <input type="text" placeholder="Dirección" ng-model="customer.customer_address_1" ng-maxlength="50" capitalize>
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Colonia</span>
+                <input type="text" placeholder="Colonia" ng-model="customer.customer_address_2" ng-maxlength="50" capitalize>
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Código postal</span>
+                <input type="number" placeholder="Código postal" ng-model="customer.customer_postalcode" ng-maxlength="5" ng-pattern="/^[0-9]{1,5}$/">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Correo electrónico</span>
+                <input type="email" placeholder="Correo electrónico" ng-model="customer.customer_email" ng-maxlength="50">
+            </label>
+            <label class="item item-input item-floating-label">
+                <span class="input-label">Teléfono</span>
+                <input type="tel" placeholder="Teléfono" ng-model="customer.customer_phone" ng-maxlength="10">
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                Descuento %
+                </div>
+                <select ng-model="customer.customer_discount" ng-options="discount.discount_value as discount.discount_value for discount in discounts">
+                </select>
+            </label>
+            <label class="item">
+                <button class="button button-block button-positive" type="submit">Guardar</button>
+            </label>
+        </div>
+      </form>
+    </ion-content>
+</ion-view>

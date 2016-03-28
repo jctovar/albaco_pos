@@ -1,26 +1,27 @@
 <ion-view view-title="Datos de la nota">
   <ion-nav-buttons side="secondary">
         <button class="button icon ion-edit" ng-click="go('/app/edit_customer/{{customer.customer_id}}')"></button>
+        <button class="button icon ion-printer" ng-click="go('/app/edit_customer/{{customer.customer_id}}')"></button>
   </ion-nav-buttons>
   <ion-content>
     <div class="list card">
         <div class="item item-thumbnail-left">
             <img src="img/favicon.png">
             <h2 class="positive">{{invoice.invoice_id}}</h2>
-            <p> {{invoice.invoice_timestamp | date:'medium'}}</p>
+            <p>{{invoice.invoice_timestamp | date:'medium'}}</p>
             <p>{{invoice.customer_name}}</p>
             <p>{{invoice.status_id}}</p>
         </div>
         <!-- Inicia lista de productos -->
-            <div class="list">
-                <div class="item" ng-repeat="detail in details" href="#/app/invoices/{{invoice.invoice_id}}">
-                    <h2 class="positive">{{detail.product_name}}</h2>
-                    <p> {{detail.product_price | currency}} * {{detail.product_qty}} {{detail.unit_name}}</p>
-                    <span class="item-note">
-                        {{detail.product_price * detail.product_qty | currency}}
-                    </span>
-                </div>
+        <div class="list">
+            <div class="item" ng-repeat="detail in details" href="#/app/invoices/{{invoice.invoice_id}}">
+                <h2 class="positive">{{detail.product_name}}</h2>
+                <p> {{detail.product_price | currency}} * {{detail.product_qty}} {{detail.unit_name}}</p>
+                <span class="item-note">
+                    {{detail.product_price * detail.product_qty | currency}}
+                </span>
             </div>
+        </div>
         <div class="item item-divider">
            Total {{details | total | currency}}
         </div> 

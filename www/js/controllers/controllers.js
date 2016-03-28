@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['main.models', 'main.directives', 'totals'])
+angular.module('starter.controllers', ['main.models', 'main.directives', 'main.factory', 'totals'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -42,10 +42,10 @@ angular.module('starter.controllers', ['main.models', 'main.directives', 'totals
 })
 
 .controller('NoteCtrl', function($scope, $ionicModal, $ionicPopup, catalog, $ionicActionSheet, $cordovaBarcodeScanner, $timeout, product) {
-        $scope.items = [];
+        $scope.items = []; // for shop car
         $scope.listCanSwipe = true;
         $scope.shouldShowDelete = false;
-        $scope.data = {};
+        $scope.data = {}; // for clear search
         
         $scope.clearSearch = function() {
             $scope.data = {};
@@ -78,15 +78,15 @@ angular.module('starter.controllers', ['main.models', 'main.directives', 'totals
         })
         
         $scope.openScanner = function() {
-            console.log('open scanner...');
+            //var data = theScanner();
             $cordovaBarcodeScanner
                 .scan()
                 .then(function(barcodeData) {
-                    console.log(JSON.stringify(barcodeData));
-                    alert(barcodeData.text);
                     // Success! Barcode data is here
+                    return barcodeData;
                 }, function(error) {
                     // An error occurred
+                    return error;
             });
         }
         
@@ -124,39 +124,40 @@ angular.module('starter.controllers', ['main.models', 'main.directives', 'totals
         
         $scope.onDoubleTap = function(item) {
             alert(item);  
-        };
+        }
         
         $scope.deleteItem = function(item) {
             $scope.items.splice(item,1);  
-        };
-        
-        
+        }
         
         $scope.openMenu = function() {
-            
-            // Show the action sheet
-            var hideSheet = $ionicActionSheet.show({
+            $ionicActionSheet.show({
                 buttons: [
-                { text: '<b>Imprimir</b>' },
-                { text: 'Guardar' }
+                    { text: '<b>Imprimir</b>' },
+                    { text: 'Guardar' }
                 ],
                 destructiveText: 'Eliminar',
+                destructiveButtonClicked: function() {
+                    $scope.items = [];
+                    return true;
+                },
                 titleText: 'Acciones de venta',
-                cancelText: 'Cerrar',
-                cancel: function() {
-                    // add cancel code..
-                    },
+                cancelText: 'Cancel',
                 buttonClicked: function(index) {
-                return true;
+                    console.log(index);
+                    switch (index){
+                        case 0 :
+                            //save & print recipe
+                            console.log(JSON.stringify($scope.items));
+                            return true;
+                        case 1 :
+                            //save shop car
+                            console.log(JSON.stringify($scope.items));
+                            return true;
+                    }
                 }
             });
-
-            // For example's sake, hide the sheet after two seconds
-            $timeout(function() {
-                hideSheet();
-            }, 2000);
-
-        };
+        }
 })
 
 .controller('InvoiceCtrl', function($scope, invoice, detail, $stateParams) {
@@ -173,7 +174,15 @@ angular.module('starter.controllers', ['main.models', 'main.directives', 'totals
 })
 
 .controller('InvoicesCtrl', function($scope, invoice) {
-//    get all products
+    $scope.listCanSwipe = true;
+    
+    $scope.doRefresh = function() {
+        var query = invoice.get(function() {
+            $scope.customers = query.invoice;
+        });
+        $scope.$broadcast('scroll.refreshComplete');
+    };
+    // get all invoices
     var query = invoice.get(function() {
         $scope.invoices = query.invoice;
     });

@@ -3,6 +3,8 @@
         <button class="button icon ion-plus-round" ng-click="go('/app/add_product')"></button>
   </ion-nav-buttons>
   <ion-content>
+      <ion-refresher pulling-text="Arrastre para recargar" on-refresh="doRefresh()">
+      </ion-refresher>
       <div class="list list-inset">
         <label class="item item-input">
             <i class="icon ion-search placeholder-icon"></i>

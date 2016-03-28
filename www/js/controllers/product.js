@@ -1,36 +1,17 @@
 angular.module('product.controllers', [])
 
-.controller('ProductCtrl', function($scope, $location, product, category, unit, $stateParams) {
-    $scope.product = {};
-    $scope.title = "Editar producto";
-    //  get product
-    var query1 = product.get({ categoryId: $stateParams.categoryId, productId: $stateParams.productId }, function() {
-        $scope.product = query1.product[0];
-        if (query1.product[0].product_tare_id == 1) $scope.product.product_tare_id = true;
-    })
-    
-    var query2 = category.get(function() {
-        $scope.categories = query2.category;
-    });
-    
-    var query3 = unit.get(function() {
-        $scope.units = query3.unit;
-    });
-    
-    //  update product
-    $scope.doSubmit = function() {
-        console.log('try update...');
-        product.update($scope.product, function() {
-            $location.path('/app/products/' + $stateParams.categoryId);
-        });
-    };
-})
-
 .controller('ProductsCtrl', function($scope, $location, product, $stateParams) {
     $scope.listCanSwipe = true;
     
     $scope.go = function (path) {
         $location.path( path );
+    };
+    
+    $scope.doRefresh = function() {
+        var query = product.get({ categoryId: $stateParams.categoryId },function() {
+            $scope.products = query.product;
+        });
+        $scope.$broadcast('scroll.refreshComplete');
     };
     //  get all products
     var query = product.get({ categoryId: $stateParams.categoryId },function() {
@@ -63,9 +44,44 @@ angular.module('product.controllers', [])
     }
 })
 
+.controller('EditProductCtrl', function($scope, $location, product, category, unit, $stateParams) {
+    $scope.product = {};
+    $scope.title = "Editar producto";
+    //  get product
+    var query1 = product.get({ categoryId: $stateParams.categoryId, productId: $stateParams.productId }, function() {
+        $scope.product = query1.product[0];
+        if (query1.product[0].product_tare_id == 1) $scope.product.product_tare_id = true;
+    })
+    
+    var query2 = category.get(function() {
+        $scope.categories = query2.category;
+    });
+    
+    var query3 = unit.get(function() {
+        $scope.units = query3.unit;
+    });
+    
+    //  update product
+    $scope.doSubmit = function() {
+        console.log('try update...');
+        product.update($scope.product, function() {
+            $location.path('/app/products/' + $stateParams.categoryId);
+        });
+    };
+})
+
 .controller('CategoriesCtrl', function($scope, $location, category) {
+    $scope.listCanSwipe = true;
+    
     $scope.go = function ( path ) {
         $location.path( path );
+    };
+    
+    $scope.doRefresh = function() {
+        var query = category.get(function() {
+        $scope.categories = query.category;
+        });
+        $scope.$broadcast('scroll.refreshComplete');
     };
     //  get all products
     var query = category.get(function() {
