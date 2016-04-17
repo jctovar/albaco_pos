@@ -20,8 +20,9 @@
             </ion-item>
         </ion-list>
     </ion-content>
-    <div class="bar bar-footer bar-balanced">
-        <button class="button button-large button-clear pull-right" ng-click="openMenu()"><h1>Total {{items | total | currency}}</h1></button>
+    <div class="bar bar-footer bar-stable">
+        <button class="button icon ion-printer button-positive" ng-click="openMenu()"></button>
+        <button class="button button-large button-clear pull-right" ng-click="openMenu()"><h2>Total {{items | total | currency}}</h2></button>
     </div>
 </ion-view>
 <script id="popup-template.html" type="text/ng-template">

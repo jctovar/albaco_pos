@@ -62,5 +62,21 @@ angular.module('main.models', ['ngResource'])
     {
         'update': { method:'PUT' }
     });
+})
+
+.factory('save_items', function(invoice) {
+    var interfaz = {
+            get: function(invoice_id){
+                
+                var query = invoice.get({ id: invoice_id });
+                query.$promise.then(function(data) {
+                    console.log('va.....' + JSON.stringify(data));
+                    return {id:1};
+                    // Do whatever when the request is finished
+                });
+            },
+            pull: 5
+        }     
+	return interfaz;
 });
 

@@ -16,7 +16,7 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 .scroll-bg {
-  background: url("/img/bg.png") repeat;
+  background: url("img/bg.png") repeat;
   height: 160px; }
 
 /*!

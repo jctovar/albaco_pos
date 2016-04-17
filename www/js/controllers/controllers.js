@@ -41,30 +41,60 @@ angular.module('starter.controllers', ['main.models', 'main.directives', 'main.f
   };
 })
 
-.controller('NoteCtrl', function($scope, $ionicModal, $ionicPopup, catalog, $ionicActionSheet, $cordovaBarcodeScanner, $timeout, product) {
+.controller('NoteCtrl', function($scope, $ionicModal, $ionicPopup, catalog, $ionicActionSheet, $cordovaBarcodeScanner, $timeout, product, invoice, detail, save_items) {
         $scope.items = []; // for shop car
         $scope.listCanSwipe = true;
         $scope.shouldShowDelete = false;
         $scope.data = {}; // for clear search
         
-        $scope.clearSearch = function() {
+        $scope.clearSearch = function () {
             $scope.data = {};
             console.log('Clear...');
         };
         
-        var query = catalog.get(function() {
+        var query = catalog.get(function () {
             $scope.products = query.product;
         });
+        // ver como mandar a una factory o service
+        $scope.printItems = function () {
+            var invoice_id;
+            var invoice_data = {};
+            var invoice_items = $scope.items;
+            
+            if ($scope.items.length != 0) {
+                invoice_data.account_id = '1';
+                invoice_data.customer_id = '1';
+                invoice_data.status_id = '1';
+                var result1 = invoice.save(invoice_data, function() {
+                    invoice_id = result1.invoice.insertId;
+                    // loop for items
+                    for (i = 0; i < invoice_items.length; i++) {
+                        var invoice_product = {};
+                        invoice_product.invoice_id = invoice_id;
+                        invoice_product.product_id = invoice_items[i].product_id;;
+                        invoice_product.invoice_product_quantity = invoice_items[i].product_qty;
+                        invoice_product.invoice_product_price = invoice_items[i].product_price;
+                        var result2 = detail.save(invoice_product, function() {
+                            console.log(JSON.stringify(result2));
+                            if (result2.detail.affectedRows == 1) {
+                                console.log('god...');
+                            }
+                        });
+                    }
+                });
+            }
+            $scope.items = [];
+        }
     
         $ionicModal.fromTemplateUrl('templates/search.html', {
             scope: $scope,
             animation: 'slide-in-up',
             focusFirstInput: true
-        }).then(function(modal) {
+        }).then(function (modal) {
             $scope.modal = modal
         })
 
-        $scope.openSearch = function() {
+        $scope.openSearch = function () {
             $scope.modal.show()
         }
 
@@ -148,10 +178,12 @@ angular.module('starter.controllers', ['main.models', 'main.directives', 'main.f
                     switch (index){
                         case 0 :
                             //save & print recipe
-                            console.log(JSON.stringify($scope.items));
+                            //console.log(JSON.stringify($scope.items));
+                            $scope.printItems();
                             return true;
                         case 1 :
                             //save shop car
+                            $scope.printItems();
                             console.log(JSON.stringify($scope.items));
                             return true;
                     }
@@ -178,7 +210,7 @@ angular.module('starter.controllers', ['main.models', 'main.directives', 'main.f
     
     $scope.doRefresh = function() {
         var query = invoice.get(function() {
-            $scope.customers = query.invoice;
+            $scope.invoices = query.invoice;
         });
         $scope.$broadcast('scroll.refreshComplete');
     };
